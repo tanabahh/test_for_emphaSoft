@@ -36,12 +36,15 @@ class UserView(APIView):
                                              data=data, partial=True)
         if serialized.is_valid(raise_exception=True):
             user_saved = serialized.save()
-            return Response({"success": "User '{}' updated successfullt"
+            return Response({"success": "User '{}' updated successfully"
                             .format(user_saved.username)})
 
-    def delete(self, pk):
+    def delete(self, request, pk):
         user = get_object_or_404(User.objects.all(), pk=pk)
-        #TODO: add change flag
-        #user.delete()
-        return Response({"message": "User with id '{}' has been deleted"
-                        .format(pk)}, status=204)
+        data = {"is_active": False}
+        serialized = WriteOnlyUserSerializer(instance=user,
+                                             data=data, partial=True)
+        if serialized.is_valid(raise_exception=True):
+            user = serialized.save()
+            return Response({"success": "User '{}' delete successfully"
+                            .format(user.username)})
