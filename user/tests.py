@@ -69,12 +69,22 @@ class RightUserTest(APITestCase):
         self.assertEqual(json_response, "User 'new_user' updated successfully")
 
     def test_delete_user(self):
-        user = User.objects.create_superuser('user_to_delete', 'user@user.com', 'user_to_delete')
+        User.objects.create_superuser('user_to_delete', 'user@user.com', 'user_to_delete')
         url = 'http://127.0.0.1:8000/api/users/2'
         response = self.client.delete(url, HTTP_AUTHORIZATION='Token {}'.format(self.token.key))
         self.assertEqual(response.status_code, 200)
         json_response = json.loads(response.render().content)
         self.assertEqual(json_response, "User 'user_to_delete' delete successfully")
+
+    def test_without_token(self):
+        url = 'http://127.0.0.1:8000/api/users/'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 401)
+
+    def test_with_wrong_token(self):
+        url = 'http://127.0.0.1:8000/api/users/'
+        response = self.client.get(url, HTTP_AUTHORIZATION='Token {}'.format('incorrect token'))
+        self.assertEqual(response.status_code, 401)
 
 
 
