@@ -26,8 +26,8 @@ class UserView(APIView):
         serializer = WriteOnlyUserSerializer(data=user)
         if serializer.is_valid(raise_exception=True):
             user_saved = serializer.save()
-            return Response({"success": "User '{}' created successfully"
-                            .format(user_saved.username)})
+            return Response("User '{}' created successfully"
+                            .format(user_saved.username))
 
     def put(self, request, pk):
         saved_user = get_object_or_404(User.objects.all(), pk=pk)
@@ -36,8 +36,8 @@ class UserView(APIView):
                                              data=data, partial=True)
         if serialized.is_valid(raise_exception=True):
             user_saved = serialized.save()
-            return Response({"success": "User '{}' updated successfully"
-                            .format(user_saved.username)})
+            return Response("User '{}' updated successfully"
+                            .format(user_saved.username))
 
     def delete(self, request, pk):
         user = get_object_or_404(User.objects.all(), pk=pk)
@@ -46,5 +46,5 @@ class UserView(APIView):
                                              data=data, partial=True)
         if serialized.is_valid(raise_exception=True):
             user = serialized.save()
-            return Response({"success": "User '{}' delete successfully"
-                            .format(user.username)})
+            return Response("User '{}' delete successfully"
+                            .format(user.username))
