@@ -1,7 +1,7 @@
 # HttpResponse is used to
 # pass the information
 # back to view
-from django.http import HttpResponse
+#  from django.http import HttpResponse
 
 
 # Defining a function which
