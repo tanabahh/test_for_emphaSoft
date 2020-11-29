@@ -9,7 +9,7 @@ class ReadOnlyUserSerializer(serializers.ModelSerializer):
                   'last_login', 'is_superuser')
         read_only_fields = ('last_login', 'is_superuser')
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> User:
         return User.objects.create_user(**validated_data)
 
 
@@ -19,10 +19,10 @@ class WriteOnlyUserSerializer(serializers.ModelSerializer):
         fields = ('username', 'first_name', 'last_name',
                   'password', 'is_active')
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> User:
         return User.objects.create_user(**validated_data)
 
-    def update(self, instance, validated_data):
+    def update(self, instance: User, validated_data: dict) -> User:
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get(
             'first_name', instance.first_name)
