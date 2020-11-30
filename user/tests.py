@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 import json
 
 
-class RightUserTest(APITestCase):
+class UserTest(APITestCase):
     def setUp(self):
         self.username = 'admin'
         self.password = 'admin'

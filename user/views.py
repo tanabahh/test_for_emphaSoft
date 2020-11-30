@@ -13,7 +13,7 @@ from .serializers import ReadOnlyUserSerializer, WriteOnlyUserSerializer
 class UserView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request: Request, pk=None) -> Response:
+    def get(self, request: Request, pk: int = None) -> Response:
         if pk:
             user = get_object_or_404(User.objects.all(), pk=pk)
             serializer = ReadOnlyUserSerializer(user)
